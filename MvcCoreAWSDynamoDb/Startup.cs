@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvcCoreAWSDynamoDb.Services;
 
 namespace MvcCoreAWSDynamoDb
 {
@@ -17,6 +18,7 @@ namespace MvcCoreAWSDynamoDb
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ServiceAWSDynamoDb>();
             services.AddControllersWithViews();
         }
 
