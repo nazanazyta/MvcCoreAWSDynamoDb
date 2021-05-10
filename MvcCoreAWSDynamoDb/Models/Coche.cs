@@ -18,5 +18,7 @@ namespace MvcCoreAWSDynamoDb.Models
         public String Modelo { get; set; }
         [DynamoDBProperty("velocidadmaxima")]
         public int VelocidadMaxima { get; set; }
+        [DynamoDBProperty("motor")]
+        public Motor Motor { get; set; }
     }
 }

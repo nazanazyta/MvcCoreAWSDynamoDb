@@ -22,6 +22,12 @@ namespace MvcCoreAWSDynamoDb.Controllers
             return View(await this.ServiceDynamo.GetCoches());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(String marca)
+        {
+            return View(await this.ServiceDynamo.GetCochesByMarca(marca));
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             return View(await this.ServiceDynamo.FindCoche(id));
@@ -39,8 +45,17 @@ namespace MvcCoreAWSDynamoDb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Coche car)
+        public async Task<IActionResult> Create(Coche car, String incluirmotor,
+            String tipo, int caballos, int cilindrada)
         {
+            if (incluirmotor != null)
+            {
+                car.Motor = new Motor();
+                car.Motor.Tipo = tipo;
+                car.Motor.Caballos = caballos;
+                car.Motor.Cilindrada = cilindrada;
+            }
+
             await this.ServiceDynamo.CreateCoche(car);
             return RedirectToAction("Index");
         }

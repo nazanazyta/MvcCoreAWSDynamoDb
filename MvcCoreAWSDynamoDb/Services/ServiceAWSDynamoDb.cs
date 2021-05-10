@@ -44,6 +44,17 @@ namespace MvcCoreAWSDynamoDb.Services
             //return this.context.FromDocuments<Coche>(data).ToList();
         }
 
+        public async Task<List<Coche>> GetCochesByMarca(String marca)
+        {
+            var tabla = this.context.GetTargetTable<Coche>();
+            ScanFilter scanFilter = new ScanFilter();
+            scanFilter.AddCondition("marca", ScanOperator.Equal, marca);
+            Search results = tabla.Scan(scanFilter);
+            List<Document> data = await results.GetNextSetAsync();
+            IEnumerable<Coche> cars = this.context.FromDocuments<Coche>(data);
+            return cars.ToList();
+        }
+
         public async Task<Coche> FindCoche(int idcoche)
         {
             //SI ESTAMOS BUSCANDO POR PARTITION KEY (PRIMARY KEY)
